@@ -3,618 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje a las Flores Amarillas 🌻✨</title>
-
+    <title>¡Feliz Cumpleaños! 🎀 Hello Kitty Special Edition</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Montserrat:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #030206;
-            font-family: 'Montserrat', sans-serif;
-            user-select: none;
-            -webkit-user-select: none;
+        /* Custom Theme Palette based on Sanrio / Hello Kitty Branding */
+        :root {
+            --kitty-pink: #FFB7C5;
+            --kitty-red: #F90013;
+            --kitty-yellow: #FFE700;
+            --kitty-blue: #0054AE;
+            --kitty-bg: #FFF5F7;
         }
 
-        .font-cursive { font-family: 'Great Vibes', cursive; }
-        .font-romantic { font-family: 'Dancing Script', cursive; }
-
-        .text-glow-gold {
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.9), 0 0 22px rgba(255, 180, 0, 0.7), 0 0 35px rgba(255, 140, 0, 0.5);
+        body {
+            font-family: 'Fredoka', 'Quicksand', sans-serif;
+            background-color: var(--kitty-bg);
+            background-image: 
+                radial-gradient(#FFB7C5 1.8px, transparent 1.8px), 
+                radial-gradient(#FFB7C5 1.8px, #FFF5F7 1.8px);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+            overflow-x: hidden;
         }
 
-        .text-glow-yellow {
-            text-shadow: 0 0 6px rgba(255, 255, 160, 0.9), 0 0 15px rgba(255, 220, 0, 0.8);
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
         }
 
-        .glass-panel {
-            background: rgba(18, 12, 4, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 215, 0, 0.35);
-            box-shadow: 0 0 40px rgba(255, 190, 0, 0.3), inset 0 0 20px rgba(255, 215, 0, 0.15);
+        /* Floating Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
         }
 
-        .floating-label {
-            position: absolute;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            pointer-events: auto;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease, filter 0.3s ease;
-            z-index: 10;
+        @keyframes bounce-gentle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
-        .floating-label:hover {
-            transform: translate(-50%, -50%) scale(1.25) !important;
-            filter: drop-shadow(0 0 15px rgba(255, 230, 0, 0.95));
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
         }
 
-        .modal-hidden {
-            opacity: 0;
-            transform: scale(0.75) translateY(30px);
-            pointer-events: none;
+        .animate-bounce-gentle {
+            animation: bounce-gentle 2.5s ease-in-out infinite;
         }
 
-        .modal-visible {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Candle Flame Animation */
+        @keyframes pulse-flame {
+            0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
+            50% { transform: scale(1.18) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 8px #FFE700); }
         }
 
-        /* Pulse glow for buttons */
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
-            50% { transform: scale(1.05); box-shadow: 0 0 45px rgba(255, 215, 0, 0.95); }
+        .flame-active {
+            animation: pulse-flame 0.7s infinite ease-in-out;
+            transform-origin: center bottom;
         }
 
-        .pulse-glow {
-            animation: pulseGlow 2.5s infinite ease-in-out;
+        /* 3D Flip Card Effect */
+        .perspective {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: rgba(10, 5, 0, 0.5); }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.6); border-radius: 3px; }
+        /* Cute Glassmorphism Containers */
+        .kawaii-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border: 3.5px solid #FFB7C5;
+            box-shadow: 0 12px 28px -6px rgba(255, 183, 197, 0.6), 0 8px 12px -6px rgba(249, 0, 19, 0.15);
+        }
+
+        /* Custom Cute Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFE7EC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FFB7C5;
+            border-radius: 10px;
+            border: 2px solid #FFF5F7;
+        }
     </style>
 </head>
-<body class="relative w-full h-full bg-black overflow-hidden flex items-center justify-center">
+<body class="text-pink-950 selection:bg-pink-300 selection:text-pink-900 min-h-screen relative pb-20">
 
-    <canvas id="spaceCanvas" class="absolute inset-0 w-full h-full z-0"></canvas>
+    <!-- Background Floating Decorations -->
+    <div id="floating-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <!-- JS populates Hello Kitty bows, stars and hearts -->
+    </div>
 
-    <div id="introScreen" class="absolute z-30 flex flex-col items-center justify-center text-center p-6 transition-all duration-1000">
-        <div class="mb-8 relative">
-            <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-yellow-500 to-amber-200 p-1 shadow-[0_0_50px_rgba(255,215,0,0.8)] pulse-glow flex items-center justify-center">
-                <span class="text-5xl">✨</span>
+    <!-- Music Control Header Bar (Fixed Top Right) -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="musicToggleBtn" onclick="toggleHelloKittyMusic()" class="bg-white/95 border-3 border-pink-400 text-pink-600 px-4 py-2.5 rounded-full shadow-lg flex items-center space-x-2.5 hover:bg-pink-50 transition transform hover:scale-105 active:scale-95 cursor-pointer">
+            <i id="musicIcon" data-lucide="music" class="w-5 h-5 text-red-500"></i>
+            <span id="musicText" class="text-sm font-bold tracking-wide text-pink-700">Reproducir Cajita de Música 🎀</span>
+        </button>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="relative z-10 max-w-4xl mx-auto px-4 pt-8 space-y-12 sm:space-y-16">
+
+        <!-- Banner & Hero Section -->
+        <section class="text-center space-y-6 pt-4">
+            <div class="inline-block relative">
+                <!-- Ribbon & Sparkles Decor -->
+                <span class="absolute -top-7 -left-7 text-4xl sm:text-5xl animate-bounce">🎀</span>
+                <span class="absolute -bottom-4 -right-7 text-4xl sm:text-5xl animate-pulse">✨</span>
+                
+                <h1 class="text-4xl sm:text-6xl font-pacifico text-red-500 drop-shadow-md tracking-wide px-4 py-1">
+                    ¡Feliz Cumpleaños!
+                </h1>
             </div>
-        </div>
-        <h1 class="text-4xl md:text-6xl font-cursive text-yellow-300 text-glow-gold mb-4 tracking-wide">
-            Flores Amarillas para Ti
-        </h1>
-        <p class="text-yellow-100/80 font-light text-sm md:text-base max-w-md mb-8 leading-relaxed">
-            Una galaxia de detalles pensada especialmente para ti...
-        </p>
 
-        <button id="startJourneyBtn" class="group relative inline-flex items-center justify-center p-0.5 overflow-hidden text-lg font-medium rounded-full bg-gradient-to-br from-yellow-300 via-amber-400 to-yellow-600 hover:text-white focus:outline-none shadow-[0_0_35px_rgba(255,215,0,0.8)] transition-all duration-300 hover:scale-110">
-            <span class="relative px-10 py-4 transition-all ease-in duration-200 bg-gray-950 rounded-full group-hover:bg-opacity-0 font-semibold text-yellow-200 flex items-center gap-3 tracking-wider">
-                <span>Comenzar Viaje</span>
-                <i class="fas fa-rocket text-yellow-400 group-hover:translate-x-1 transition-transform"></i>
-            </span>
-        </button>
-    </div>
+            <!-- Hello Kitty SVG Vector Graphics -->
+            <div class="relative w-52 h-52 sm:w-64 sm:h-64 mx-auto my-2 animate-float cursor-pointer" onclick="playPurrSound()">
+                <svg viewBox="0 0 200 180" class="w-full h-full filter drop-shadow-xl">
+                    <!-- Head -->
+                    <ellipse cx="100" cy="95" rx="70" ry="55" fill="#FFFFFF" stroke="#333333" stroke-width="4.5"/>
+                    <!-- Left Ear -->
+                    <path d="M 45 55 Q 30 15 65 35 Z" fill="#FFFFFF" stroke="#333333" stroke-width="4.5" stroke-linejoin="round"/>
+                    <!-- Right Ear -->
+                    <path d="M 155 55 Q 170 15 135 35 Z" fill="#FFFFFF" stroke="#333333" stroke-width="4.5" stroke-linejoin="round"/>
+                    <!-- Eyes -->
+                    <ellipse cx="65" cy="95" rx="6" ry="8" fill="#333333"/>
+                    <ellipse cx="135" cy="95" rx="6" ry="8" fill="#333333"/>
+                    <!-- Yellow Nose -->
+                    <ellipse cx="100" cy="104" rx="7" ry="5" fill="#FFE700" stroke="#333333" stroke-width="2"/>
+                    <!-- Whiskers Left -->
+                    <line x1="25" y1="88" x2="48" y2="92" stroke="#333333" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="20" y1="100" x2="46" y2="100" stroke="#333333" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="25" y1="112" x2="48" y2="108" stroke="#333333" stroke-width="4" stroke-linecap="round"/>
+                    <!-- Whiskers Right -->
+                    <line x1="175" y1="88" x2="152" y2="92" stroke="#333333" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="180" y1="100" x2="154" y2="100" stroke="#333333" stroke-width="4" stroke-linecap="round"/>
+                    <line x1="175" y1="112" x2="152" y2="108" stroke="#333333" stroke-width="4" stroke-linecap="round"/>
+                    <!-- Signature Red Bow (#F90013) -->
+                    <g transform="translate(130, 38) rotate(15)">
+                        <ellipse cx="0" cy="0" rx="14" ry="10" fill="#F90013" stroke="#333333" stroke-width="3"/>
+                        <ellipse cx="-22" cy="-2" rx="15" ry="12" fill="#F90013" stroke="#333333" stroke-width="3"/>
+                        <ellipse cx="22" cy="-2" rx="15" ry="12" fill="#F90013" stroke="#333333" stroke-width="3"/>
+                        <circle cx="0" cy="0" r="8" fill="#F90013" stroke="#333333" stroke-width="3"/>
+                    </g>
+                </svg>
+            </div>
 
-    <div id="orbitContainer" class="absolute inset-0 pointer-events-none z-10 transition-opacity duration-1000 opacity-0"></div>
+            <div class="inline-flex items-center gap-2 bg-white/85 backdrop-blur-md px-6 py-2.5 rounded-full border-2 border-pink-300 shadow-md">
+                <span class="text-pink-500 font-semibold text-base sm:text-lg">Un día ultra kawaii para celebrar a la mejor amiga 🌸</span>
+            </div>
+        </section>
 
-    <div id="hudControls" class="absolute top-6 left-6 z-20 flex items-center gap-3 transition-opacity duration-1000 opacity-0">
-        <button id="musicBtn" class="glass-panel text-yellow-300 px-4 py-2.5 rounded-full flex items-center gap-2 text-xs md:text-sm font-medium hover:bg-yellow-500/20 transition duration-300">
-            <i class="fas fa-music text-yellow-400 animate-spin" style="animation-duration: 4s;"></i>
-            <span id="musicText">Música Activa</span>
-        </button>
-    </div>
+        <!-- Memory Gallery / Timeline Section -->
+        <section class="space-y-6">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-red-500 flex items-center justify-center gap-2">
+                    <span>🎀</span> Galería de Recuerdos Especiales <span>🎀</span>
+                </h2>
+                <p class="text-sm text-pink-600 font-medium">Toca o haz clic en las tarjetas Polaroid para girarlas</p>
+            </div>
 
-    <div id="noteModalOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-md z-40 flex items-center justify-center p-4 modal-hidden transition-all duration-500">
-        <div id="noteModalContent" class="glass-panel max-w-lg w-full rounded-3xl p-8 text-center relative border border-yellow-400/50 shadow-[0_0_60px_rgba(255,215,0,0.4)] my-auto overflow-hidden">
-            
-            <!-- Ambient glows inside modal -->
-            <div class="absolute -top-20 -left-20 w-40 h-40 bg-yellow-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Polaroid Card 1 -->
+                <div class="perspective h-80 cursor-pointer" onclick="flipCard(this)">
+                    <div class="transform-style-3d relative w-full h-full rounded-2xl shadow-lg border-4 border-pink-200 bg-white p-4">
+                        <!-- Front -->
+                        <div class="backface-hidden absolute inset-0 flex flex-col items-center justify-between p-5 bg-gradient-to-b from-white to-pink-50 rounded-xl">
+                            <div class="w-full flex justify-between items-center">
+                                <span class="text-xs font-bold text-pink-400 tracking-wider">RECUERDO #01</span>
+                                <span class="text-red-500">🎀</span>
+                            </div>
+                            <div class="w-full h-40 bg-pink-100 rounded-lg flex items-center justify-center border-2 border-dashed border-pink-300">
+                                <span class="text-5xl">🐱💖</span>
+                            </div>
+                            <h3 class="font-bold text-pink-700 text-base">Las Mejores Risas</h3>
+                            <span class="text-xs text-pink-400 font-semibold">Haz clic para descubrir 💌</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-pink-100 via-white to-red-50 rounded-xl border-2 border-pink-200">
+                            <p class="text-sm text-pink-900 leading-relaxed font-semibold">
+                                "Gracias por cada risa espontánea, por las aventuras impredecibles y por ser esa amiga con la que todo es mil veces más divertido."
+                            </p>
+                            <span class="text-2xl mt-4">🌸✨</span>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Sunflower / Icon Header -->
-            <div class="relative z-10 mb-3 inline-block">
-                <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-tr from-yellow-400 to-amber-200 p-0.5 shadow-[0_0_25px_rgba(255,215,0,0.8)]">
-                    <div class="w-full h-full rounded-full bg-gray-950 flex items-center justify-center text-3xl" id="modalIcon">
-                        🌻
+                <!-- Polaroid Card 2 -->
+                <div class="perspective h-80 cursor-pointer" onclick="flipCard(this)">
+                    <div class="transform-style-3d relative w-full h-full rounded-2xl shadow-lg border-4 border-pink-200 bg-white p-4">
+                        <!-- Front -->
+                        <div class="backface-hidden absolute inset-0 flex flex-col items-center justify-between p-5 bg-gradient-to-b from-white to-pink-50 rounded-xl">
+                            <div class="w-full flex justify-between items-center">
+                                <span class="text-xs font-bold text-pink-400 tracking-wider">RECUERDO #02</span>
+                                <span class="text-red-500">🎀</span>
+                            </div>
+                            <div class="w-full h-40 bg-pink-100 rounded-lg flex items-center justify-center border-2 border-dashed border-pink-300">
+                                <span class="text-5xl">🍓🍰</span>
+                            </div>
+                            <h3 class="font-bold text-pink-700 text-base">Momentos Inolvidables</h3>
+                            <span class="text-xs text-pink-400 font-semibold">Haz clic para descubrir 💌</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-pink-100 via-white to-red-50 rounded-xl border-2 border-pink-200">
+                            <p class="text-sm text-pink-900 leading-relaxed font-semibold">
+                                "Entre charlas interminables y confidencias, tu amistad se convirtió en un refugio bonito que valoro con todo el corazón."
+                            </p>
+                            <span class="text-2xl mt-4">🌷👑</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Polaroid Card 3 -->
+                <div class="perspective h-80 cursor-pointer" onclick="flipCard(this)">
+                    <div class="transform-style-3d relative w-full h-full rounded-2xl shadow-lg border-4 border-pink-200 bg-white p-4">
+                        <!-- Front -->
+                        <div class="backface-hidden absolute inset-0 flex flex-col items-center justify-between p-5 bg-gradient-to-b from-white to-pink-50 rounded-xl">
+                            <div class="w-full flex justify-between items-center">
+                                <span class="text-xs font-bold text-pink-400 tracking-wider">RECUERDO #03</span>
+                                <span class="text-red-500">🎀</span>
+                            </div>
+                            <div class="w-full h-40 bg-pink-100 rounded-lg flex items-center justify-center border-2 border-dashed border-pink-300">
+                                <span class="text-5xl">⭐🎈</span>
+                            </div>
+                            <h3 class="font-bold text-pink-700 text-base">Un Futuro Genial</h3>
+                            <span class="text-xs text-pink-400 font-semibold">Haz clic para descubrir 💌</span>
+                        </div>
+                        <!-- Back -->
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-pink-100 via-white to-red-50 rounded-xl border-2 border-pink-200">
+                            <p class="text-sm text-pink-900 leading-relaxed font-semibold">
+                                "Que este nuevo año venga cargado de metas cumplidas, salud, mucho éxito y miles de razones para seguir celebrando juntas."
+                            </p>
+                            <span class="text-2xl mt-4">🎂🎉</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="kawaii-card rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="text-center space-y-2">
+                <span class="bg-red-100 text-red-600 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-red-200">Desafío Kawaii</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-red-500">¿Qué tanto nos conocemos? 🤔💖</h2>
+                <p class="text-sm text-pink-600 font-medium">Responde las preguntas para desbloquear tu nivel de amistad</p>
+            </div>
+
+            <div id="quizContainer" class="space-y-6 max-w-lg mx-auto">
+                <!-- Question 1 -->
+                <div class="quiz-q border-2 border-pink-200 rounded-2xl p-5 bg-white/90 shadow-sm space-y-3">
+                    <p class="font-bold text-pink-800 text-base">1. ¿Cuál es el código de vestimenta oficial de tu día de cumpleaños?</p>
+                    <div class="grid grid-cols-1 gap-2.5">
+                        <button onclick="checkAnswer(this, false)" class="w-full text-left p-3 rounded-xl border-2 border-pink-200 hover:bg-pink-50 transition text-sm font-semibold text-pink-700">A) Pijama aburrida todo el día 😴</button>
+                        <button onclick="checkAnswer(this, true)" class="w-full text-left p-3 rounded-xl border-2 border-pink-200 hover:bg-pink-50 transition text-sm font-semibold text-pink-700">B) 100% estilo Hello Kitty, con moño rosa y mucha actitud 🎀✨</button>
+                        <button onclick="checkAnswer(this, false)" class="w-full text-left p-3 rounded-xl border-2 border-pink-200 hover:bg-pink-50 transition text-sm font-semibold text-pink-700">C) Ropa formal de oficina 👔</button>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="quiz-q border-2 border-pink-200 rounded-2xl p-5 bg-white/90 shadow-sm space-y-3">
+                    <p class="font-bold text-pink-800 text-base">2. ¿Qué no puede faltar jamás entre verdaderas amigas?</p>
+                    <div class="grid grid-cols-1 gap-2.5">
+                        <button onclick="checkAnswer(this, true)" class="w-full text-left p-3 rounded-xl border-2 border-pink-200 hover:bg-pink-50 transition text-sm font-semibold text-pink-700">A) Risas infinitas, apoyo mutuo y comida deliciosa 🌸🍰</button>
+                        <button onclick="checkAnswer(this, false)" class="w-full text-left p-3 rounded-xl border-2 border-pink-200 hover:bg-pink-50 transition text-sm font-semibold text-pink-700">B) Enviar mensajes solo una vez al año 📵</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Title -->
-            <h2 id="modalTitle" class="text-3xl md:text-4xl font-cursive text-yellow-300 text-glow-gold mb-1">
-                Nota Especial
-            </h2>
-            <p id="modalSubtitle" class="text-xs uppercase tracking-widest text-amber-300/80 mb-4 font-light">
-                Para la persona más especial
-            </p>
+            <!-- Quiz Victory Banner -->
+            <div id="quizSuccessMsg" class="hidden text-center bg-gradient-to-r from-pink-100 via-red-50 to-pink-100 border-2 border-pink-300 rounded-2xl p-5 animate-bounce-gentle space-y-1">
+                <p class="text-red-600 font-bold text-lg sm:text-xl">¡Puntaje Perfecto! 🎉🎀</p>
+                <p class="text-xs sm:text-sm text-pink-700 font-semibold">¡Certificada oficialmente como la cumpleañera más adorable!</p>
+            </div>
+        </section>
 
-            <div class="w-20 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent mx-auto mb-5"></div>
-
-            <!-- Content Body -->
-            <div id="modalBody" class="text-yellow-100/90 space-y-3 text-sm md:text-base leading-relaxed font-light text-justify px-2 max-h-[45vh] overflow-y-auto">
-                <!-- Text populated dynamically -->
+        <!-- Interactive Cake & Birthday Letter Section -->
+        <section class="kawaii-card rounded-3xl p-6 sm:p-10 text-center space-y-6 relative overflow-hidden">
+            <div class="space-y-2">
+                <h2 class="text-2xl sm:text-3xl font-bold text-red-500">Pide un Deseo y Apaga la Vela 🎂</h2>
+                <p class="text-sm text-pink-600 font-medium">Toca o haz clic sobre la velita encendida para revelar tu carta secreta</p>
             </div>
 
-            <!-- Footer & Close Button -->
-            <div class="mt-6 pt-4 border-t border-yellow-500/20 flex items-center justify-between">
-                <span class="font-romantic text-xl text-yellow-300 text-glow-yellow">
-                    Con mucho amor ✨
-                </span>
-                
-                <button id="closeModalBtn" class="bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-200 border border-yellow-400/50 px-6 py-2 rounded-full font-medium text-xs md:text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,215,0,0.6)] flex items-center gap-1.5">
-                    <span>Volver a la Galaxia</span>
-                    <i class="fas fa-sparkles text-xs"></i>
-                </button>
-            </div>
-        </div>
-    </div>
+            <!-- Interactive Cake Vector -->
+            <div class="relative w-52 sm:w-60 mx-auto my-4">
+                <svg viewBox="0 0 200 180" class="w-full h-auto">
+                    <!-- Plate -->
+                    <ellipse cx="100" cy="160" rx="90" ry="15" fill="#F8BBD0" stroke="#F48FB1" stroke-width="3"/>
+                    
+                    <!-- Cake Lower Tier -->
+                    <rect x="30" y="100" width="140" height="50" rx="10" fill="#F48FB1"/>
+                    <path d="M 30 115 Q 45 125 60 115 T 90 115 T 120 115 T 150 115 T 170 115 L 170 100 L 30 100 Z" fill="#FFFFFF"/>
+                    
+                    <!-- Cake Upper Tier -->
+                    <rect x="45" y="65" width="110" height="40" rx="8" fill="#FF80AB"/>
+                    <path d="M 45 75 Q 60 85 75 75 T 105 75 T 135 75 T 155 75 L 155 65 L 45 65 Z" fill="#FFFFFF"/>
 
+                    <!-- Hello Kitty Ribbon Motif on Cake -->
+                    <g transform="translate(100, 90) scale(0.65)">
+                        <ellipse cx="-15" cy="-2" rx="12" ry="9" fill="#F90013"/>
+                        <ellipse cx="15" cy="-2" rx="12" ry="9" fill="#F90013"/>
+                        <circle cx="0" cy="0" r="6" fill="#F90013"/>
+                    </g>
+                    
+                    <!-- Candle Base -->
+                    <rect x="94" y="30" width="12" height="35" rx="3" fill="#FFE700" stroke="#FBC02D" stroke-width="2"/>
+                    
+                    <!-- Candle Flame Clickable Group -->
+                    <g id="candleFlame" onclick="blowOutCandle()" class="cursor-pointer group">
+                        <!-- Click Buffer -->
+                        <circle cx="100" cy="18" r="22" fill="transparent"/>
+                        <!-- Outer Flame Layer -->
+                        <path id="flameShape" class="flame-active transition-opacity duration-500" d="M 100 5 Q 112 18 100 28 Q 88 18 100 5 Z" fill="#FF9800"/>
+                        <!-- Inner Flame Layer -->
+                        <path id="flameInner" class="flame-active transition-opacity duration-500" d="M 100 10 Q 106 18 100 25 Q 94 18 100 10 Z" fill="#FFE700"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Revealable Letter -->
+            <div id="birthdayLetter" class="hidden transition-all duration-700 max-w-xl mx-auto bg-gradient-to-b from-pink-50 to-white p-6 sm:p-8 rounded-2xl border-2 border-pink-300 shadow-inner text-left space-y-4">
+                <div class="flex justify-between items-center border-b border-pink-200 pb-3">
+                    <span class="font-pacifico text-red-500 text-xl">De: Tu Amiga Especial 💌</span>
+                    <span class="text-2xl">🎀</span>
+                </div>
+                <p class="text-pink-900 leading-relaxed text-sm sm:text-base font-medium">
+                    ¡Feliz Cumpleaños! 🎉🎂 Espero que este nuevo año de vida venga repleto de sonrisas gigantes, abrazos cálidos, momentos inolvidables y muchísima felicidad. 
+                </p>
+                <p class="text-pink-900 leading-relaxed text-sm sm:text-base font-medium">
+                    Gracias por contagiar tu energía bonita y por iluminar siempre los días de quienes te rodean. ¡Que disfrutes tu día al máximo rodeada de las personas que más te quieren! ✨💖
+                </p>
+                <div class="text-right pt-2 font-bold text-red-500 font-pacifico text-lg">
+                    ¡Con mucho cariño siempre! 💕
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-xs text-pink-400 font-medium">
+        Hecho con 💖 y estilo Hello Kitty • ¡Que tengas un día inolvidable! 🌸
+    </footer>
+
+    <!-- JavaScript Logic -->
     <script>
-        class RomanticAudioSynthesizer {
-            constructor() {
-                this.ctx = null;
-                this.isPlaying = false;
-                this.timer = null;
-                this.notes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99];
-                this.chords = [
-                    [261.63, 329.63, 392.00],
-                    [220.00, 261.63, 329.63],
-                    [174.61, 220.00, 261.63],
-                    [196.00, 246.94, 293.66]
-                ];
-                this.chordIdx = 0;
-            }
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
-            init() {
-                if (!this.ctx) {
-                    const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    this.ctx = new AudioContext();
-                }
-                if (this.ctx.state === 'suspended') {
-                    this.ctx.resume();
-                }
-            }
-
-            playTone(freq, type = 'sine', duration = 2.5, gainVal = 0.08) {
-                if (!this.isPlaying || !this.ctx) return;
-                try {
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-
-                    gain.gain.setValueAtTime(0, this.ctx.currentTime);
-                    gain.gain.linearRampToValueAtTime(gainVal, this.ctx.currentTime + 0.3);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
-
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-
-                    osc.start();
-                    osc.stop(this.ctx.currentTime + duration);
-                } catch (e) {}
-            }
-
-            start() {
-                this.init();
-                this.isPlaying = true;
-                let step = 0;
-
-                this.timer = setInterval(() => {
-                    if (!this.isPlaying) return;
-                    if (step % 6 === 0) {
-                        const currentChord = this.chords[this.chordIdx];
-                        currentChord.forEach(n => this.playTone(n * 0.5, 'sine', 3.5, 0.025));
-                        this.chordIdx = (this.chordIdx + 1) % this.chords.length;
-                    }
-                    if (Math.random() > 0.3) {
-                        const randomNote = this.notes[Math.floor(Math.random() * this.notes.length)];
-                        this.playTone(randomNote, 'triangle', 2.0, 0.04);
-                    }
-                    step++;
-                }, 700);
-            }
-
-            stop() {
-                this.isPlaying = false;
-                if (this.timer) clearInterval(this.timer);
-            }
-
-            toggle() {
-                if (this.isPlaying) this.stop();
-                else this.start();
-                return this.isPlaying;
-            }
-        }
-
-        const romanticNotesData = {
-    "Conversar contigo": {
-        icon: "✨",
-        subtitle: "Mi charla favorita",
-        text: [
-            "Es increíble cómo una conversación normal contigo se convierte en el mejor momento del día.",
-            "Me encanta la facilidad con la que nos entendemos y lo divertido que es compartir cosas contigo."
-        ]
-    },
-    "Tu gran sonrisa": {
-        icon: "🌻",
-        subtitle: "Buena vibra total",
-        text: [
-            "Tienes una risa contagiosa que alegra cualquier lugar.",
-            "Incluso en un día pesado, hablar un rato contigo o ver tus ocurrencias siempre me saca una sonrisa."
-        ]
-    },
-    "Confianza especial": {
-        icon: "🤝",
-        subtitle: "Cómplices de verdad",
-        text: [
-            "Valoro mucho la confianza que tenemos. Es genial poder ser totalmente yo mismo contigo.",
-            "Sabes que cuentas conmigo para lo que sea, en las buenas, en las malas y en las bromas."
-        ]
-    },
-    "Eres genial": {
-        icon: "🌟",
-        subtitle: "Única en tu estilo",
-        text: [
-            "Tienes una forma de ser auténtica que llama mucho la atención.",
-            "Tu personalidad tiene esa chispa divertida y genial que hace que nunca me aburra a tu lado."
-        ]
-    },
-    "Compañerismo puro": {
-        icon: "🤝",
-        subtitle: "Siempre ahí",
-        text: [
-            "Es genial saber que cuento con una amiga de verdad, alguien con quien siempre hay buena vibra y apoyo mutuo.",
-            "Me encanta lo fácil que es compartir momentos contigo y saber que en las buenas y en las malas siempre hay compañerismo."
-        ]
-    },
-    "Feliz Día de la Amistad": {
-        icon: "💛",
-        subtitle: "Celebrando lo bueno",
-        text: [
-            "En un día especial como hoy, quería aprovechar para recordarte lo mucho que valoro contar con tu amistad.",
-            "Gracias por los momentos compartidos, por tu buena energía y por ser esa amiga increíble que siempre le pone alegría a todo."
-        ]
-    },
-    "Detalle para ti": {
-        icon: "💐",
-        subtitle: "Para una gran amiga",
-        text: [
-            "Estas flores amarillas son un detalle sincero para recordarte lo mucho que valoro tenerte en mi vida.",
-            "Gracias por tu amistad, por las risas y por ser una persona tan increíble."
-        ]
-    },
-    "A seguir compartiendo": {
-        icon: "💖",
-        subtitle: "Lo mejor está por venir",
-        text: [
-            "Me encanta lo bien que nos comunicamos sin complicaciones ni presiones.",
-            "A seguir sumando momentos, risas y buenas historias. ¡Que nada cambie esta gran amistad!"
-        ]
-            }
-        };
-
-        const canvas = document.getElementById('spaceCanvas');
-        const ctx = canvas.getContext('2d');
-
-        let width, height, centerX, centerY;
-        let particles = [];
-        let heartParticles = [];
-        let stars = [];
-        let time = 0;
-
-        // Zoom scale variable (Starts far away: 0.05 -> Zoom in to 1.0)
-        let currentZoom = 0.05;
-        let targetZoom = 0.05;
-        let journeyStarted = false;
-
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            centerX = width / 2;
-            centerY = height / 2;
-            initSpace();
-        }
-
-        window.addEventListener('resize', resizeCanvas);
-
-        // Parametric Heart Shape
-        function getHeartPoint(t, scale = 14) {
-            const x = 16 * Math.pow(Math.sin(t), 3);
-            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-            return { x: x * scale, y: y * scale };
-        }
-
-        function initSpace() {
-            particles = [];
-            heartParticles = [];
-            stars = [];
-
-            // Background distant stars
-            for (let i = 0; i < 400; i++) {
-                stars.push({
-                    x: (Math.random() - 0.5) * width * 3,
-                    y: (Math.random() - 0.5) * height * 3,
-                    z: Math.random() * 1000 + 1,
-                    size: Math.random() * 1.5 + 0.3,
-                    alpha: Math.random()
-                });
-            }
-
-            // Galaxy spiral particles
-            const spiralCount = 850;
-            for (let i = 0; i < spiralCount; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.pow(Math.random(), 1.6) * (Math.min(width, height) * 0.5);
-                particles.push({
-                    angle: angle,
-                    distance: distance,
-                    speed: 0.002 + Math.random() * 0.002,
-                    size: Math.random() * 2.8 + 0.6,
-                    color: Math.random() > 0.35 ? '#ffdf00' : (Math.random() > 0.5 ? '#ffd700' : '#ffffff'),
-                    alpha: Math.random() * 0.85 + 0.15,
-                    pulse: Math.random() * Math.PI
-                });
-            }
-
-            // Central Heart Particles
-            const heartPoints = 240;
-            const heartScale = Math.min(width, height) * 0.013;
-            for (let i = 0; i < heartPoints; i++) {
-                const t = (i / heartPoints) * Math.PI * 2;
-                const pos = getHeartPoint(t, heartScale);
-                heartParticles.push({
-                    baseX: pos.x,
-                    baseY: pos.y,
-                    size: Math.random() * 2.6 + 1.2,
-                    offset: Math.random() * Math.PI * 2,
-                    color: i % 2 === 0 ? '#fff580' : '#ffc107'
-                });
-            }
-        }
-
-        function render() {
-            time += 0.015;
-
-            // Smooth Zoom interpolation
-            currentZoom += (targetZoom - currentZoom) * 0.035;
-
-            // Clear background with cosmic trail effect
-            ctx.fillStyle = 'rgba(3, 2, 6, 0.25)';
-            ctx.fillRect(0, 0, width, height);
-
-            ctx.save();
-            ctx.translate(centerX, centerY);
-
-            // 1. Render Stars moving forward during zoom
-            stars.forEach(s => {
-                const scale = (currentZoom * 800) / s.z;
-                const sx = s.x * currentZoom;
-                const sy = s.y * currentZoom;
-
-                if (sx > -centerX && sx < centerX && sy > -centerY && sy < centerY) {
-                    ctx.fillStyle = `rgba(255, 240, 180, ${s.alpha * Math.min(1, currentZoom * 2)})`;
-                    ctx.beginPath();
-                    ctx.arc(sx, sy, Math.max(0.5, s.size * currentZoom * 2), 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            });
-
-            // 2. Render Central Nebula Glow
-            if (currentZoom > 0.1) {
-                const auraGrad = ctx.createRadialGradient(0, 0, 5, 0, 0, Math.min(width, height) * 0.4 * currentZoom);
-                auraGrad.addColorStop(0, `rgba(255, 200, 0, ${0.25 * currentZoom})`);
-                auraGrad.addColorStop(0.5, `rgba(255, 140, 0, ${0.08 * currentZoom})`);
-                auraGrad.addColorStop(1, 'rgba(0,0,0,0)');
-                ctx.fillStyle = auraGrad;
-                ctx.beginPath();
-                ctx.arc(0, 0, Math.min(width, height) * 0.4 * currentZoom, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            // 3. Render Galaxy Spiral Particles
-            particles.forEach(p => {
-                p.angle += p.speed;
-                p.pulse += 0.025;
-                const currentDist = (p.distance + Math.sin(p.pulse) * 6) * currentZoom;
-                const x = Math.cos(p.angle) * currentDist;
-                const y = Math.sin(p.angle) * currentDist * 0.65; // Orbit tilt
-
-                ctx.save();
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.alpha * Math.min(1, currentZoom * 1.5);
-                ctx.shadowColor = '#ffb700';
-                ctx.shadowBlur = (p.size > 2 && currentZoom > 0.5) ? 10 : 0;
-                ctx.beginPath();
-                ctx.arc(x, y, Math.max(0.2, p.size * currentZoom), 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            });
-
-            // 4. Render Sparkling Central Heart
-            if (currentZoom > 0.2) {
-                const heartPulse = 1 + Math.sin(time * 3) * 0.06;
-                heartParticles.forEach(hp => {
-                    const px = (hp.baseX + Math.sin(time * 2 + hp.offset) * 3) * heartPulse * currentZoom;
-                    const py = (hp.baseY + Math.cos(time * 2 + hp.offset) * 3) * heartPulse * currentZoom;
-
-                    ctx.save();
-                    ctx.fillStyle = hp.color;
-                    ctx.globalAlpha = Math.min(1, (currentZoom - 0.2) * 1.5);
-                    ctx.shadowColor = '#ffee55';
-                    ctx.shadowBlur = 12;
-                    ctx.beginPath();
-                    ctx.arc(px, py, Math.max(0.3, hp.size * currentZoom), 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                });
-            }
-
-            ctx.restore();
-
-            requestAnimationFrame(render);
-        }
-
-        const audioSynth = new RomanticAudioSynthesizer();
-        let orbitElements = [];
-
-        function createOrbitingElements() {
-            const container = document.getElementById('orbitContainer');
-            container.innerHTML = '';
-            orbitElements = [];
-
-            const phrases = Object.keys(romanticNotesData);
-            const count = phrases.length;
-
-            phrases.forEach((phraseKey, index) => {
-                const data = romanticNotesData[phraseKey];
+        /* --- Floating Particles Background Generator --- */
+        function createFloatingParticles() {
+            const container = document.getElementById('floating-bg');
+            const items = ['🎀', '✨', '🌸', '💖', '🍓', '⭐'];
+            
+            for (let i = 0; i < 18; i++) {
                 const el = document.createElement('div');
-                el.className = 'floating-label glass-panel px-4 py-2 rounded-full border border-yellow-400/50 shadow-lg text-yellow-200 font-semibold text-xs md:text-sm flex items-center gap-2 backdrop-blur-md select-none';
-                el.innerHTML = `
-                    <span class="text-xl animate-bounce" style="animation-duration: ${2 + index * 0.2}s">${data.icon}</span>
-                    <span class="font-romantic text-base md:text-lg text-glow-gold text-yellow-300">${phraseKey}</span>
-                `;
-
-                // Click event opens the specific note modal for this phrase
-                el.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openNoteModal(phraseKey);
-                });
-
+                el.innerText = items[Math.floor(Math.random() * items.length)];
+                el.className = 'absolute opacity-40 select-none pointer-events-none text-xl sm:text-2xl';
+                el.style.left = `${Math.random() * 100}%`;
+                el.style.top = `${Math.random() * 100}%`;
+                el.style.animation = `float ${3 + Math.random() * 4}s ease-in-out infinite`;
+                el.style.animationDelay = `${Math.random() * 3}s`;
                 container.appendChild(el);
+            }
+        }
+        createFloatingParticles();
 
-                orbitElements.push({
-                    element: el,
-                    angle: (index / count) * Math.PI * 2,
-                    speed: 0.003
-                });
+        /* --- Web Audio API Hello Kitty Synthesizer --- */
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicTimeout = null;
+
+        // Hello Kitty Musical Notes (Chiptune Bell Sequence)
+        const helloKittyMelody = [
+            { note: 523.25, duration: 0.25 }, // C5
+            { note: 659.25, duration: 0.25 }, // E5
+            { note: 783.99, duration: 0.25 }, // G5
+            { note: 1046.50, duration: 0.4 }, // C6
+            { note: 880.00, duration: 0.3 },  // A5
+            { note: 783.99, duration: 0.3 },  // G5
+            { note: 659.25, duration: 0.5 },  // E5
+
+            { note: 523.25, duration: 0.25 }, // C5
+            { note: 523.25, duration: 0.25 }, // C5
+            { note: 659.25, duration: 0.25 }, // E5
+            { note: 783.99, duration: 0.35 }, // G5
+            { note: 880.00, duration: 0.35 }, // A5
+            { note: 1046.50, duration: 0.5 }, // C6
+            
+            { note: 987.77, duration: 0.25 }, // B5
+            { note: 880.00, duration: 0.25 }, // A5
+            { note: 783.99, duration: 0.4 },  // G5
+            { note: 659.25, duration: 0.4 },  // E5
+            { note: 698.46, duration: 0.3 },  // F5
+            { note: 783.99, duration: 0.6 }   // G5
+        ];
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Plays single synth note
+        function playTone(freq, duration, type = 'triangle') {
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = type; // Soft music box / chiptune feeling
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                
+                gain.gain.setValueAtTime(0.18, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch (e) {
+                // Ignore initial browser lock errors
+            }
+        }
+
+        // Hello Kitty purr effect on clicking Kitty SVG
+        function playPurrSound() {
+            playTone(880.00, 0.15, 'sine');
+            setTimeout(() => playTone(1046.50, 0.25, 'sine'), 100);
+            confetti({
+                particleCount: 25,
+                spread: 50,
+                origin: { y: 0.4 },
+                colors: ['#FFB7C5', '#F90013', '#FFE700']
             });
         }
 
-        function updateOrbit() {
-            if (journeyStarted && currentZoom > 0.4) {
-                const cx = window.innerWidth / 2;
-                const cy = window.innerHeight / 2;
-                const radiusX = Math.min(window.innerWidth, window.innerHeight) * 0.38;
-                const radiusY = radiusX * 0.55;
+        // Sequential Hello Kitty Melody Loop
+        function playMelodySequence(index = 0) {
+            if (!isMusicPlaying) return;
 
-                orbitElements.forEach(item => {
-                    item.angle += item.speed;
-                    const x = cx + Math.cos(item.angle) * radiusX;
-                    const y = cy + Math.sin(item.angle) * radiusY;
+            const current = helloKittyMelody[index];
+            playTone(current.note, current.duration, 'triangle');
 
-                    const zIndex = Math.floor((Math.sin(item.angle) + 1) * 100);
-                    const opacity = Math.min(1, (currentZoom - 0.4) * 2) * (0.6 + (Math.sin(item.angle) + 1) * 0.2);
+            const nextIndex = (index + 1) % helloKittyMelody.length;
+            const delay = current.duration * 1000 + 80;
 
-                    item.element.style.left = `${x}px`;
-                    item.element.style.top = `${y}px`;
-                    item.element.style.zIndex = zIndex;
-                    item.element.style.opacity = opacity;
-                });
-            }
-
-            requestAnimationFrame(updateOrbit);
+            musicTimeout = setTimeout(() => {
+                playMelodySequence(nextIndex);
+            }, delay);
         }
 
-        const noteModalOverlay = document.getElementById('noteModalOverlay');
-        const modalIcon = document.getElementById('modalIcon');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalSubtitle = document.getElementById('modalSubtitle');
-        const modalBody = document.getElementById('modalBody');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-
-        function openNoteModal(phraseKey) {
-            const data = romanticNotesData[phraseKey];
-            if (!data) return;
-
-            audioSynth.init();
-            audioSynth.playTone(587.33, 'triangle', 1.8, 0.12);
-
-            modalIcon.textContent = data.icon;
-            modalTitle.textContent = phraseKey;
-            modalSubtitle.textContent = data.subtitle;
-
-            modalBody.innerHTML = data.text.map(p => `<p class="first-letter:text-2xl first-letter:font-cursive first-letter:text-yellow-300">${p}</p>`).join('');
-
-            noteModalOverlay.classList.remove('modal-hidden');
-            noteModalOverlay.classList.add('modal-visible');
-        }
-
-        closeModalBtn.addEventListener('click', () => {
-            noteModalOverlay.classList.remove('modal-visible');
-            noteModalOverlay.classList.add('modal-hidden');
-        });
-
-        noteModalOverlay.addEventListener('click', (e) => {
-            if (e.target === noteModalOverlay) {
-                noteModalOverlay.classList.remove('modal-visible');
-                noteModalOverlay.classList.add('modal-hidden');
-            }
-        });
-
-        const startJourneyBtn = document.getElementById('startJourneyBtn');
-        const introScreen = document.getElementById('introScreen');
-        const orbitContainer = document.getElementById('orbitContainer');
-        const hudControls = document.getElementById('hudControls');
-        const musicBtn = document.getElementById('musicBtn');
-        const musicText = document.getElementById('musicText');
-
-        startJourneyBtn.addEventListener('click', () => {
-            journeyStarted = true;
-            targetZoom = 1.0; // Trigger Zoom-In cinematic sequence
-
-            // Fade out intro button and title
-            introScreen.style.opacity = '0';
-            introScreen.style.pointerEvents = 'none';
-
-            // Start Audio Synthesizer
-            audioSynth.init();
-            audioSynth.start();
-
-            // Reveal HUD and Orbiting phrases when galaxy is reached
-            setTimeout(() => {
-                orbitContainer.classList.remove('opacity-0');
-                orbitContainer.classList.add('opacity-100');
-                hudControls.classList.remove('opacity-0');
-                hudControls.classList.add('opacity-100');
-            }, 1200);
-        });
-
-        musicBtn.addEventListener('click', () => {
-            const playing = audioSynth.toggle();
-            if (playing) {
-                musicText.textContent = "Música Activa";
-                musicBtn.classList.remove('opacity-60');
+        function toggleHelloKittyMusic() {
+            getAudioContext();
+            const musicText = document.getElementById('musicText');
+            
+            if (isMusicPlaying) {
+                isMusicPlaying = false;
+                clearTimeout(musicTimeout);
+                musicText.innerText = "Reproducir Cajita de Música 🎀";
             } else {
-                musicText.textContent = "Música Pausada";
-                musicBtn.classList.add('opacity-60');
+                isMusicPlaying = true;
+                musicText.innerText = "Pausar Melodía 🎵";
+                playMelodySequence(0);
             }
-        });
+        }
 
-        window.onload = function() {
-            resizeCanvas();
-            render();
-            createOrbitingElements();
-            updateOrbit();
-        };
+        /* --- Seamless Auto-Play Setup on First User Touch/Click/Scroll --- */
+        function startAudioOnInteraction() {
+            try {
+                getAudioContext();
+                if (!isMusicPlaying) {
+                    isMusicPlaying = true;
+                    document.getElementById('musicText').innerText = "Pausar Melodía 🎵";
+                    playMelodySequence(0);
+                }
+            } catch (e) {
+                // Audio lock will resolve on next gesture
+            }
+            removeInteractionListeners();
+        }
+
+        function removeInteractionListeners() {
+            window.removeEventListener('click', startAudioOnInteraction);
+            window.removeEventListener('keydown', startAudioOnInteraction);
+            window.removeEventListener('touchstart', startAudioOnInteraction);
+            window.removeEventListener('scroll', startAudioOnInteraction);
+        }
+
+        window.addEventListener('click', startAudioOnInteraction, { once: true });
+        window.addEventListener('keydown', startAudioOnInteraction, { once: true });
+        window.addEventListener('touchstart', startAudioOnInteraction, { once: true });
+        window.addEventListener('scroll', startAudioOnInteraction, { once: true });
+
+        /* --- Interactive Card Flip --- */
+        function flipCard(cardElement) {
+            getAudioContext();
+            const innerCard = cardElement.querySelector('.transform-style-3d');
+            innerCard.classList.toggle('rotate-y-180');
+            playTone(659.25, 0.15); // Cute chime sound
+        }
+
+        /* --- Quiz Validation Logic --- */
+        let answeredCount = 0;
+        function checkAnswer(button, isCorrect) {
+            getAudioContext();
+            const parentDiv = button.closest('.quiz-q');
+            const buttons = parentDiv.querySelectorAll('button');
+            
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+
+            if (isCorrect) {
+                button.classList.remove('opacity-50');
+                button.classList.add('bg-pink-200', 'border-red-400', 'font-bold', 'text-red-700');
+                
+                // Success Audio
+                playTone(659.25, 0.15); // E5
+                setTimeout(() => playTone(783.99, 0.2), 120); // G5
+                setTimeout(() => playTone(1046.50, 0.3), 240); // C6
+
+                confetti({
+                    particleCount: 45,
+                    spread: 60,
+                    origin: { y: 0.65 },
+                    colors: ['#FFB7C5', '#F90013', '#FFFFFF']
+                });
+            } else {
+                button.classList.remove('opacity-50');
+                button.classList.add('bg-gray-100', 'border-gray-300', 'line-through', 'text-gray-400');
+                playTone(300.00, 0.2, 'sawtooth');
+            }
+
+            answeredCount++;
+            if (answeredCount >= 2) {
+                document.getElementById('quizSuccessMsg').classList.remove('hidden');
+            }
+        }
+
+        /* --- Candle Blowing & Letter Animation --- */
+        let candleIsBlown = false;
+        function blowOutCandle() {
+            if (candleIsBlown) return;
+            getAudioContext();
+
+            const flameShape = document.getElementById('flameShape');
+            const flameInner = document.getElementById('flameInner');
+            
+            // Extinguish flame
+            flameShape.style.opacity = '0';
+            flameInner.style.opacity = '0';
+            candleIsBlown = true;
+
+            // Birthday chime sequence
+            const chimeNotes = [523.25, 659.25, 783.99, 1046.50];
+            chimeNotes.forEach((freq, idx) => {
+                setTimeout(() => playTone(freq, 0.35, 'triangle'), idx * 110);
+            });
+
+            // Big Confetti burst
+            confetti({
+                particleCount: 120,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#FFB7C5', '#F90013', '#FFE700', '#FFFFFF']
+            });
+
+            // Reveal letter smoothly
+            setTimeout(() => {
+                const letter = document.getElementById('birthdayLetter');
+                letter.classList.remove('hidden');
+                letter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 550);
+        }
     </script>
 </body>
 </html>
